@@ -18,20 +18,18 @@
 
 ## 📌 Overview
 
-PowerDNS Authoritative / Recursor / dnsdist configuration hardening auditor
+OPdnsX is an offline, read-only configuration auditor for PowerDNS Authoritative, Recursor and dnsdist deployments. It parses their configuration formats and flags hardening issues across APIs, ACLs, DNSSEC, credentials and file permissions. Secrets are masked throughout the output.
 
 ---
 
 ## ✨ Features
 
-- Stdlib pdns.conf / recursor.conf (key=value, +=, include-dir) / recursor.yml (YAML-lite) / dnsdist Lua parsers — offline and strictly read-only
-- Authoritative — API / webserver exposure, api-key & password strength / hashing, AXFR ACLs, NOTIFY and autoprimary trust, DNS UPDATE ACLs, gmysql / gpgsql / LDAP credentials and TLS, setuid / chroot, Lua records
-- Recursor — open resolver ACLs, DNSSEC mode, webserver, API key, cache limits, forward zones, Lua scripts, dont-query / ECS / NXNS mitigations
-- dnsdist — setKey strength, controlSocket / console ACL, webserver auth & ACL, frontend ACL, TLS, rate limits
-- File ownership / permission checks on configs, include dirs, Lua scripts and backend database files
-- Secrets masked everywhere; --root discovery; CWE + MITRE
-- Export TXT / Markdown / JSON / CSV / SARIF 2.1.0
-- Self-test --demo, CI gates --fail-on / --min-severity
+- Parses pdns.conf, recursor.conf/recursor.yml and dnsdist Lua configurations offline
+- Audits API/webserver exposure, API-key and password strength, and AXFR/UPDATE ACLs
+- Checks Recursor open-resolver ACLs, DNSSEC mode and query mitigations
+- Reviews dnsdist console/web ACLs, TLS and rate limits
+- File ownership and permission checks with secrets masked everywhere
+- Multiple report formats (txt/json/sarif/md/csv), a rule catalogue and hardened templates
 
 ---
 
@@ -45,7 +43,10 @@ PowerDNS Authoritative / Recursor / dnsdist configuration hardening auditor
 ## 🚀 Usage
 
 ```bash
-./OPdnsX
+./OPdnsX --auth /etc/powerdns/pdns.conf --json -o report.json
+./OPdnsX --scan --root /mnt/collected
+./OPdnsX --recursor /etc/pdns-recursor/recursor.conf --fail-on high
+./OPdnsX --help
 ```
 
 ---
